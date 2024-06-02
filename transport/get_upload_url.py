@@ -23,11 +23,11 @@ def create_presigned_url(method, object_name, expiration=3600):
     # The response contains the presigned URL
     return response
 
-def get(path):
+def geturl(path):
     return create_presigned_url('get_object', path, expiration=3600*24*5)
 
-def put(path):
+def puturl(path):
     return create_presigned_url('put_object', path, expiration=3600*24*5)
 
-get('/uploads/shared/lib_drumroll')
-put('/uploads/shared/lib_drumroll')
+geturl('uploads/shared/lib_drumroll')
+puturl('uploads/shared/lib_drumroll')
