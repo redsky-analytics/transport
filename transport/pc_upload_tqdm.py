@@ -27,17 +27,22 @@ def upload_file(path, url):
         with open(path, 'rb') as f:
             c = pycurl.Curl()
             c.setopt(c.URL, url)
-            c.setopt(c.POST, 1)
-            c.setopt(c.HTTPPOST, [('title', 'test'), (('file', (c.FORM_FILE, path)))])
+            c.setopt(c.UPLOAD, 1)
+            # c.setopt(c.VERBOSE, 1)
+            c.setopt(c.HTTPHEADER, ("Transfer-Encoding:",f"Content-Length: {total_size}"))
+
+            c.setopt(pycurl.SSL_VERIFYPEER, 0)   
+            c.setopt(pycurl.SSL_VERIFYHOST, 0)
+            c.setopt(c.READDATA, f)
             # follow redirects:
-            c.setopt(c.FOLLOWLOCATION, True)
+            # c.setopt(c.FOLLOWLOCATION, True)
             # custom progress bar
             c.setopt(c.NOPROGRESS, False)
             c.setopt(c.XFERINFOFUNCTION, status)
 
             bodyOutput = BytesIO()
             headersOutput = BytesIO()
-            c.setopt(c.WRITEFUNCTION, bodyOutput.write)
-            c.setopt(c.HEADERFUNCTION, headersOutput.write)
+            # c.setopt(c.WRITEFUNCTION, bodyOutput.write)
+            # c.setopt(c.HEADERFUNCTION, headersOutput.write)
             c.perform()
             c.close()

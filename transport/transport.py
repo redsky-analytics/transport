@@ -11,4 +11,9 @@ def get(token, fullpath=False):
     url = geturl(token)
     download_file(url, path)
 
-get('data/ms')
+def put(path, destination):
+    url = puturl(destination)
+    upload_file(path, url)
+
+# get('data/ms')
+put('localdata/ms', 'data/ms2')
