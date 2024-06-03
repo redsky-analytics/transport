@@ -1,7 +1,7 @@
 #%%
-from get_upload_url import geturl, puturl
-from pc_download_tqdm import download_file
-from pc_upload_tqdm import upload_file
+from transport.get_upload_url import geturl, puturl
+from transport.pc_download_tqdm import download_file
+from transport.pc_upload_tqdm import upload_file
 from pathlib import Path
 
 def get(token, fullpath=False):
