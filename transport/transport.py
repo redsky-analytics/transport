@@ -15,5 +15,3 @@ def put(path, destination):
     url = puturl(destination)
     upload_file(path, url)
 
-# get('data/ms')
-put('localdata/ms', 'data/ms2')
