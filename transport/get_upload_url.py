@@ -11,6 +11,9 @@ def create_presigned_url(method, object_name, expiration=3600):
     # Generate a presigned URL for the S3 object
     s3_client = boto3.client('s3')
     bucket_name = os.environ['SP_APP_BUCKET']
+    print('Bucket: ', bucket_name)
+    print('GIT_PAT: ', os.environ['GIT_PAT'])
+    
     try:
         response = s3_client.generate_presigned_url(method,
                                                     Params={'Bucket': bucket_name,

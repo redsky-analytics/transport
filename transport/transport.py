@@ -8,7 +8,7 @@ def get(token, fullpath=False):
     Path('localdata').mkdir(parents=True, exist_ok=True)
     
     path = Path('localdata') / Path(token).name
-    url = geturl(token)
+    url = geturl(token)    
     download_file(url, path)
 
 def put(path, destination):
