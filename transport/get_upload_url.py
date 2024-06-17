@@ -30,5 +30,3 @@ def geturl(path):
 def puturl(path):
     return create_presigned_url('put_object', path, expiration=3600*24*5)
 
-geturl('uploads/shared/lib_drumroll')
-puturl('uploads/shared/lib_drumroll')
