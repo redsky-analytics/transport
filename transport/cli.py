@@ -58,6 +58,22 @@ class UntanglerCli(object):
     def logout(self):
         update_config({'idToken': None, 'refreshToken': None })
 
+    def collections(self):
+        print('aa')
+
+    def collection(self, id, function=None, data=None):
+        if function is not None and  function not in ['del', 'update', 'items', 'share', 'unshare']:
+            raise Exception(f'Bad function {function}')
+
+        print('aa')
+
+    def item(self, id, function=None):
+        if function is not None and  function not in ['del', 'update']:
+            raise Exception(f'Bad function {function}')
+        print('bb')
+
+    def progress(self, id, data=None):
+        print('cc')
 
 def run():
     ucli = UntanglerCli()
