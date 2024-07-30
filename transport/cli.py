@@ -1,9 +1,11 @@
-# from transport.transport import get
+from transport.transport import get
 import sys, shutil
 import fire, getpass
 import confuse
 from pathlib import Path
 import requests
+
+
 
 app_name = 'untangler-cli'
 
@@ -14,6 +16,15 @@ if not Path(f'~/.config/{app_name}/config.yaml').expanduser().exists():
     
 
 config = confuse.Configuration(app_name)
+
+
+def http_get(path):
+    base_url = config['HTTP'].get()
+    token = config['idToken'].get()
+    url = '/'.join([base_url, path])
+    print(url)
+    response = requests.get(url, headers={'Authorization': token})
+    return response.json()
 
 def auth(email, password):
     webKey = config['FB'].get()
@@ -36,6 +47,7 @@ def update_config(d):
 
 
 class UntanglerCli(object):
+    """A cli to handle untangler data and models."""
 
     def login(self, username=None):
         if username is None:
@@ -59,20 +71,24 @@ class UntanglerCli(object):
         update_config({'idToken': None, 'refreshToken': None })
 
     def collections(self):
-        print('aa')
+        '''Get the list of collections'''
+        print(http_get('collections'))
 
     def collection(self, id, function=None, data=None):
-        if function is not None and  function not in ['del', 'update', 'items', 'share', 'unshare']:
+        '''Manipulate a single collection'''
+        if function is not None and  function not in ['del', 'update', 'items', 'share', 'unshare', 'download', 'upload']:
             raise Exception(f'Bad function {function}')
 
         print('aa')
 
     def item(self, id, function=None):
-        if function is not None and  function not in ['del', 'update']:
+        '''Manipulate a single collection'''
+        if function is not None and  function not in ['del', 'update', 'download']:
             raise Exception(f'Bad function {function}')
         print('bb')
 
-    def progress(self, id, data=None):
+    def progress(self, id, data=None, wait=None):
+        '''Check progress / wait for completion'''
         print('cc')
 
 def run():

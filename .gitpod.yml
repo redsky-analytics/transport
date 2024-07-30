@@ -1,1 +1,5 @@
 image: gitpod/workspace-full
+
+tasks:
+  - name: Install
+    init: poetry install
