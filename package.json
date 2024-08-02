@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "@architect/architect": "^11.0.13",
+    "deploy": "^1.0.3"
+  }
+}

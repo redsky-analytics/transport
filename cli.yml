@@ -1,3 +1,6 @@
 FB: AIzaSyA7opW4O_fum2z98Y_1p3sFdeFuQ7ajiSI
-HTTP: https://sqjjts911h.execute-api.us-west-2.amazonaws.com
-WS: wss://c8s0iobz18.execute-api.us-west-2.amazonaws.com/staging
+HTTPG: https://mzt7altl9j.execute-api.us-west-2.amazonaws.com
+HTTP: https://q1u98dcak4.execute-api.us-west-2.amazonaws.com
+WS: wss://cye3709mkh.execute-api.us-west-2.amazonaws.com/staging
+idToken:
+refreshToken: 
