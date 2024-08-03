@@ -1,11 +1,11 @@
-from transport.transport import get
 import sys, shutil
 import fire, getpass
 import confuse
 from pathlib import Path
 import requests
 import json
-
+from transport.pc_upload_tqdm import upload_file
+from transport.pc_download_tqdm import download_file
 
 app_name = 'untangler-cli'
 
@@ -191,9 +191,29 @@ class UntanglerCli(object):
             else:
                 raise Exception('Email list is not valid. Provide a comma separated list of emails. No spaces.')
         elif function == 'upload':
-            return http_get('collection', id, 'upload')
+            if data is None:
+                raise Exception('Must specify existing file to upload.')
+            file_exists = Path(data).exists()
+            
+            if not file_exists:
+                raise Exception('File does not exists')
+            
+            # self.collection(id, 'update', {'path': data})
+            response =  http_get('collection', id, 'upload')
+            url = response['result']
+            upload_file(data, url)
+            return
         elif function == 'download':
-            return http_get('collection', id, 'download')
+            if data is None:
+                raise Exception('Must specify existing file to upload.')
+            file_exists = Path(data).exists()
+            if file_exists:
+                raise Exception('File Exists')
+
+            response = http_get('collection', id, 'download')
+            url = response['result']
+            download_file(url, data)
+            return
         elif function == 'items':
             return print_json(http_get('collection', id, 'items'))
         elif function == 'item':
@@ -222,6 +242,38 @@ class UntanglerCli(object):
                     
                 return print_json(http_put('collection', id, 'item', itemName, data=itemData))
 
+            if itemFunction == 'upload':
+                if itemData is None:
+                    raise Exception('Must specify existing file to upload.')
+                file_exists = Path(itemData).exists()
+                
+                if not file_exists:
+                    raise Exception('File does not exists')
+                
+                # self.collection(id, 'update', {'path': data})
+
+                response =  http_get('collection', id, 'item', itemName, 'upload')
+
+                url = response['result']
+                upload_file(itemData, url)
+                return
+
+            if itemFunction == 'download':
+                if itemData is None:
+                    raise Exception('Must specify download location.')
+
+                file_exists = Path(itemData).exists()
+                
+                if file_exists:
+                    raise Exception('File already exists')
+                
+                # self.collection(id, 'update', {'path': data})
+
+                response =  http_get('collection', id, 'item', itemName, 'download')
+
+                url = response['result']
+                download_file(url, itemData)
+                return
         print('Unimplemented')
 
     def progress(self, id, data=None, wait=None):
